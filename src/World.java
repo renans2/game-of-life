@@ -14,4 +14,33 @@ public class World {
     public void updateCells() {
 
     }
+
+    public boolean willLive(int row, int col) {
+        boolean alive = grid[row][col];
+        int neighbours = countNeighbours(row, col);
+
+        if (alive && neighbours < MAX_UNDERPOPULATION) return false;
+
+        else if (alive && neighbours < MIN_NEIGHBOURS_STAY_ALIVE && neighbours > MAX_NEIGHBOURS_STAY_ALIVE) return false;
+
+        else if (alive && neighbours > MIN_OVERPOPULATION) return false;
+
+        else if (!alive && neighbours == NEIGHBOURS_TO_REVIVE) return true;
+
+
+
+    }
+
+    private int countNeighbours(int row, int col) {
+        int count = 0;
+
+        for (int i = row - 1; i < row + 1; i++) {
+            for (int j = col - 1; j < col + 1; j++) {
+                if (i >= 0 && j >= 0 && grid[i][j]) count++;
+
+            }
+        }
+
+        return count;
+    }
 }
