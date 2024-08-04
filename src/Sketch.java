@@ -37,7 +37,7 @@ public class Sketch extends PApplet {
 
         for (int i = 0; i < COLS + 1; i++) {
             for (int j = 0; j < ROWS; j++) {
-                if(isAlive(i, j))
+                if(world.isAlive(i, j))
                     rect(i * OFFSET_X, j * OFFSET_Y, OFFSET_X, HEIGHT);
             }
         }
