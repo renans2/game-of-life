@@ -26,8 +26,10 @@ public class Sketch extends PApplet {
     public void draw() {
         background(0);
 
-        for (int i = 0; i < COLS; i++)
-            for (int j = 0; j < ROWS; j++)
-                rect(i * OFFSET_X, j * OFFSET_Y, OFFSET_X, OFFSET_Y);
+        for (int i = 0; i < COLS + 1; i++) {
+
+            line(i * OFFSET_X, 0, i * OFFSET_X, HEIGHT);
+            line(0, i * OFFSET_Y, WIDTH, i * OFFSET_Y);
+        }
     }
 }
