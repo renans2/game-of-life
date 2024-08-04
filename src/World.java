@@ -9,14 +9,21 @@ public class World {
     private final int cols;
     private boolean[][] grid;
 
-    public World(int cols, int rows) {
+    public World(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
-        grid = new boolean[cols][rows];
-    }
+        grid = new boolean[rows][cols];
 
-    public void updateCells() {
+        // Calcula a posição central
+        int centerX = 20;
+        int centerY = 20;
 
+        // Posiciona o glider no meio da matriz
+        grid[centerY - 1][centerX] = true;   // O
+        grid[centerY][centerX + 1] = true;   // O
+        grid[centerY + 1][centerX - 1] = true; // O
+        grid[centerY + 1][centerX] = true;   // O
+        grid[centerY + 1][centerX + 1] = true;
     }
 
     public boolean willLive(int row, int col) {
@@ -25,7 +32,7 @@ public class World {
 
         if (alive && neighbours < MAX_UNDERPOPULATION) return false;
 
-        else if (alive && neighbours < MIN_NEIGHBOURS_STAY_ALIVE && neighbours > MAX_NEIGHBOURS_STAY_ALIVE) return false;
+        else if (alive && neighbours >= MIN_NEIGHBOURS_STAY_ALIVE && neighbours <= MAX_NEIGHBOURS_STAY_ALIVE) return true;
 
         else if (alive && neighbours > MIN_OVERPOPULATION) return false;
 
@@ -37,10 +44,13 @@ public class World {
     private int countNeighbours(int row, int col) {
         int count = 0;
 
-        for (int i = row - 1; i < row + 1; i++) {
-            for (int j = col - 1; j < col + 1; j++) {
-                if (i >= 0 && j >= 0 && grid[i][j]) count++;
+        for (int i = row - 1; i <= row + 1; i++) {
+            for (int j = col - 1; j <= col + 1; j++) {
+                if(i == row && j == col)
+                    continue;
 
+                if (0 <= i && i < rows && 0 <= j && j < cols && grid[i][j])
+                    count++;
             }
         }
 
@@ -48,16 +58,16 @@ public class World {
     }
 
     public boolean isAlive(int row, int col) {
-        return grid[col][row];
+        return grid[row][col];
     }
 
-    private void update() {
+    public void updateCells() {
         boolean[][] newGrid = new boolean[rows][cols];
 
-        for (int col = 0; col < cols; col++)
-            for (int row = 0; row < rows; row++)
-                if(willLive(col, row))
-                    newGrid[col][row] = true;
+        for (int row = 0; row < rows; row++)
+            for (int col = 0; col < cols; col++)
+                if(willLive(row, col))
+                    newGrid[row][col] = true;
 
         grid = newGrid;
     }

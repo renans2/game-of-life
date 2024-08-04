@@ -20,25 +20,27 @@ public class Sketch extends PApplet {
 
     public void setup() {
         stroke(255);
-        fill(0);
         strokeWeight(0.5f);
-        noFill();
+        fill(255);
+        frameRate(3);
     }
 
     public void draw() {
         background(0);
 
-        for (int i = 0; i < COLS + 1; i++) {
-            line(i * OFFSET_X, 0, i * OFFSET_X, HEIGHT);
-            line(0, i * OFFSET_Y, WIDTH, i * OFFSET_Y);
+        for (int i = 0; i < COLS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                line(i * OFFSET_X, 0, i * OFFSET_X, HEIGHT);
+                line(0, j * OFFSET_Y, WIDTH, j * OFFSET_Y);
+            }
         }
 
         world.updateCells();
 
-        for (int i = 0; i < COLS + 1; i++) {
-            for (int j = 0; j < ROWS; j++) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
                 if(world.isAlive(i, j))
-                    rect(i * OFFSET_X, j * OFFSET_Y, OFFSET_X, HEIGHT);
+                    rect(i * OFFSET_X, j * OFFSET_Y, OFFSET_X, OFFSET_Y);
             }
         }
     }
