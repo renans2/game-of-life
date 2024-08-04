@@ -5,7 +5,13 @@ public class World {
     private static final int MIN_OVERPOPULATION = 3;
     private static final int MAX_UNDERPOPULATION = 2;
 
-    public World() {
+    private final boolean[][] grid;
+
+    public World(int cols, int rows) {
+        grid = new boolean[cols][rows];
+    }
+
+    public void updateCells() {
 
     }
 }
